@@ -8,3 +8,10 @@ This is practice of user authentication
 - Express
 - MongoDB
 - React
+
+## Run Server
+
+```
+$ cd server
+$ npm run dev
+```
