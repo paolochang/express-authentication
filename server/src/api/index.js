@@ -15,3 +15,5 @@ userRouter.patch("/", authCtrl.update);
 userRouter.delete("/", authCtrl.remove);
 
 authRouter.use("/:id", userRouter);
+
+export default authRouter;

@@ -1,5 +1,54 @@
-export const register = (req, res) => {
-  res.send("Register");
+import User from "../models/User";
+
+/**
+ *  POST /api/auth/register
+ *
+ *  {
+ *    "username": "kildong",
+ *    "password": "password",
+ *    "confirmPassword": "password",
+ *    "name": "홍길동"
+ *  }
+ */
+export const register = async (req, res) => {
+  let isPasswordMatch = true;
+  let existUsername = false;
+  try {
+    const { username, password, confirmPassword, name } = req.body;
+
+    if (password !== confirmPassword) {
+      isPasswordMatch = false;
+      let error = new Error("Passwords are not match.");
+      error.status = 400;
+      throw error;
+    }
+
+    existUsername = await User.findByUsername(username);
+
+    if (existUsername) {
+      let error = new Error("Username is already been used.");
+      error.status = 409;
+      throw error;
+    }
+
+    const user = new User({
+      username,
+      name,
+    });
+
+    await user.setPassword(password);
+    await user.save();
+
+    const token = user.generateToken();
+    res.cookie("auth-token", token, {
+      maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
+      httpOnly: true,
+    });
+
+    return res.status(200).json({ user: user.serialize(), token });
+  } catch (err) {
+    return res.status(err.status).json({ err: err.message });
+  }
 };
 
 export const login = (req, res) => {
