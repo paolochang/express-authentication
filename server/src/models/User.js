@@ -1,5 +1,7 @@
+require("dotenv").config();
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -20,6 +22,15 @@ UserSchema.methods.serialize = function () {
   const data = this.toJSON();
   delete data.password;
   return data;
+};
+
+UserSchema.methods.generateToken = function () {
+  const token = jwt.sign(
+    { _id: this._id, username: this.username },
+    process.env.JWT_KEY,
+    { expiresIn: "7d" }
+  );
+  return token;
 };
 
 const User = mongoose.model("User", UserSchema);

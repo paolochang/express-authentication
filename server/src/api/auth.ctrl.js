@@ -29,7 +29,13 @@ export const register = async (req, res) => {
     await user.setPassword(password);
     await user.save();
 
-    return res.status(200).json({ user: user.serialize() });
+    const token = user.generateToken();
+    res.cookie("auth-token", token, {
+      maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
+      httpOnly: true,
+    });
+
+    return res.status(200).json({ user: user.serialize(), token });
   } catch (err) {
     return res.status(err.status).json({ err: err.message });
   }
