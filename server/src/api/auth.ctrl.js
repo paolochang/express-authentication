@@ -51,8 +51,49 @@ export const register = async (req, res) => {
   }
 };
 
-export const login = (req, res) => {
-  res.send("Login");
+/**
+ *  POST /api/auth/login
+ *
+ *  {
+ *    "username": "kildong",
+ *    "password": "password"
+ *  }
+ */
+export const login = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    if (!username || !password) {
+      let error = new Error("Username and password are required.");
+      error.status = 401; // Unauthorized
+      throw error;
+    }
+
+    const user = await User.findByUsername(username);
+
+    if (!user) {
+      let error = new Error("Username does not exist.");
+      error.status = 401; // Unauthorized
+      throw error;
+    }
+
+    const isValid = await user.checkPassword(password);
+
+    if (!isValid) {
+      let error = new Error("Password does not match.");
+      error.status = 401; // Unauthorized
+      throw error;
+    }
+
+    const token = user.generateToken();
+    res.cookie("auth-token", token, {
+      maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
+      httpOnly: true,
+    });
+
+    return res.status(200).json({ user: user.serialize(), token });
+  } catch (err) {
+    return res.status(err.status).json({ err: err.message });
+  }
 };
 
 export const check = (req, res) => {
