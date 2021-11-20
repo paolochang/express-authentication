@@ -23,10 +23,10 @@ export const register = async (req, res) => {
 
     const user = new User({
       username,
-      password,
       name,
     });
 
+    await user.setPassword(password);
     await user.save();
 
     return res.status(200).json({ user: user.serialize() });
