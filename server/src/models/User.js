@@ -18,6 +18,10 @@ UserSchema.methods.setPassword = async function (password) {
   this.password = hash;
 };
 
+UserSchema.methods.checkPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
 UserSchema.methods.serialize = function () {
   const data = this.toJSON();
   delete data.password;
