@@ -1,5 +1,15 @@
 import User from "../models/User";
 
+/**
+ *  POST /api/auth/register
+ *
+ *  {
+ *    "username": "kildong",
+ *    "password": "password",
+ *    "confirmPassword": "password",
+ *    "name": "홍길동"
+ *  }
+ */
 export const register = async (req, res) => {
   let isPasswordMatch = true;
   let existUsername = false;
