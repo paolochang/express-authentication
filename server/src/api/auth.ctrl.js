@@ -29,7 +29,7 @@ export const register = async (req, res) => {
 
     await user.save();
 
-    return res.status(200).json({ user });
+    return res.status(200).json({ user: user.serialize() });
   } catch (err) {
     return res.status(err.status).json({ err: err.message });
   }
