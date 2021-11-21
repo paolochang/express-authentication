@@ -40,7 +40,7 @@ export const register = async (req, res) => {
     await user.save();
 
     const token = user.generateToken();
-    res.cookie("auth-token", token, {
+    res.cookie("auth_token", token, {
       maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
       httpOnly: true,
     });
@@ -85,7 +85,7 @@ export const login = async (req, res) => {
     }
 
     const token = user.generateToken();
-    res.cookie("auth-token", token, {
+    res.cookie("auth_token", token, {
       maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
       httpOnly: true,
     });
@@ -97,14 +97,15 @@ export const login = async (req, res) => {
 };
 
 export const check = (req, res) => {
-  res.send("Check");
+  console.log("REQ.USER:", req.user);
+  res.send("Protected GET check");
 };
 
 /**
  *  POST /api/auth/logout
  */
 export const logout = (req, res) => {
-  res.cookie("auth-token", "");
+  res.clearCookie("auth_token");
   return res.status(204).send();
 };
 

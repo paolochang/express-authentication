@@ -1,11 +1,12 @@
 import express from "express";
+import authorization from "../middleware/authorization";
 import * as authCtrl from "./auth.ctrl";
 
 const authRouter = express.Router();
 
 authRouter.post("/register", authCtrl.register);
 authRouter.post("/login", authCtrl.login);
-authRouter.get("/check", authCtrl.check);
+authRouter.get("/check", authorization, authCtrl.check);
 authRouter.post("/logout", authCtrl.logout);
 
 const userRouter = express.Router();
