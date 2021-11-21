@@ -100,8 +100,12 @@ export const check = (req, res) => {
   res.send("Check");
 };
 
+/**
+ *  POST /api/auth/logout
+ */
 export const logout = (req, res) => {
-  res.send("Logout");
+  res.cookie("auth-token", "");
+  return res.status(204).send();
 };
 
 export const read = (req, res) => {
