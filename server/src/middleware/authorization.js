@@ -9,7 +9,6 @@ const authorization = (req, res, next) => {
   }
   try {
     const data = jwt.verify(token, process.env.JWT_KEY);
-    console.log("DATA:", data);
     req.user = {
       _id: data._id,
       username: data.username,

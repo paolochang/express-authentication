@@ -40,3 +40,7 @@ $ npm run dev
   "password": "password"
 }
 ```
+
+### DELETE /api/auth/remove
+
+no request body needed
