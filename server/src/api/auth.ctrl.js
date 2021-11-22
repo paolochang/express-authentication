@@ -92,6 +92,9 @@ export const login = async (req, res) => {
   }
 };
 
+/**
+ *  GET /api/auth/check
+ */
 export const check = (req, res) => {
   console.log("REQ.USER:", req.user);
   res.send("Protected GET check");
@@ -109,6 +112,9 @@ export const read = (req, res) => {
   res.send("Read");
 };
 
+/**
+ *  DELETE /api/auth/remove
+ */
 export const remove = async (req, res) => {
   /** URL: /api/auth/:id is undefined */
   console.log("REQ.PARAMS.ID:", req.params.id);

@@ -41,6 +41,14 @@ $ npm run dev
 }
 ```
 
+### GET /api/auth/check
+
+no request body needed
+
+### POST /api/auth/logout
+
+no request body needed
+
 ### DELETE /api/auth/remove
 
 no request body needed
