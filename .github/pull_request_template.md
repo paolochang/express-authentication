@@ -1,11 +1,15 @@
 ## Description:
+
 **Implement PR_PURPOSE with following requirements**
+
 - [ ] add_tasks_here
 
 ## Checklist
+
 - [ ] Documentation
 
 ## Type of PR
+
 - [ ] Feature
 - [ ] Bugfix
 - [ ] Chore (code style changes, refactoring, tech debt, etc)
@@ -13,9 +17,10 @@
 
 ## Screenshots
 
-| Originial | Updated |
-| :----: | :----:
-| ** original screenshot ** | ** updated screenshot **
+|        Originial        |        Updated         |
+| :---------------------: | :--------------------: |
+| **original screenshot** | **updated screenshot** |
 
 ## Additional Info
+
 - add additional information or context
