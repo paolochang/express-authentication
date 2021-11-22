@@ -40,10 +40,6 @@ export const register = async (req, res) => {
     await user.save();
 
     const token = user.generateToken();
-    res.cookie("auth_token", token, {
-      maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
-      httpOnly: true,
-    });
 
     return res.status(200).json({ user: user.serialize(), token });
   } catch (err) {
@@ -86,7 +82,7 @@ export const login = async (req, res) => {
 
     const token = user.generateToken();
     res.cookie("auth_token", token, {
-      maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
+      // maxAge: 300, // 5min, 1000*60*60*24*7 // 7 days
       httpOnly: true,
     });
 
@@ -106,15 +102,23 @@ export const check = (req, res) => {
  */
 export const logout = (req, res) => {
   res.clearCookie("auth_token");
-  return res.status(204).send();
+  return res.status(200).json({ message: "Logout successful" });
 };
 
 export const read = (req, res) => {
   res.send("Read");
 };
 
-export const remove = (req, res) => {
-  res.send("Remove");
+export const remove = async (req, res) => {
+  /** URL: /api/auth/:id is undefined */
+  console.log("REQ.PARAMS.ID:", req.params.id);
+  try {
+    await User.findByIdAndDelete(req.user._id);
+    res.clearCookie("auth_token");
+    return res.status(200).json({ message: "Account deleted." });
+  } catch (err) {
+    return res.status(404).json({ error: err.message }); // 404: NOT FOUNT
+  }
 };
 
 export const update = (req, res) => {
