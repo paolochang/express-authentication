@@ -1,9 +1,8 @@
 ## Description:
-**pull_request_title**
+**Implement PR_PURPOSE with following requirements**
 - [ ] add_tasks_here
 
 ## Checklist
-- [ ] Tests
 - [ ] Documentation
 
 ## Type of PR
