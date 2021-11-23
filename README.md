@@ -25,3 +25,10 @@ JWT_KEY=<jwt_secret>
 $ cd server
 $ npm run dev
 ```
+
+## Run Client
+
+```
+$ cd client
+$ yarn start
+```
