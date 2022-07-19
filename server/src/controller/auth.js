@@ -12,7 +12,6 @@ import User from "../models/User";
  */
 export const register = async (req, res) => {
   let isPasswordMatch = true;
-  let existUsername = false;
   try {
     const { username, password, confirmPassword, name } = req.body;
 
@@ -23,9 +22,9 @@ export const register = async (req, res) => {
       throw error;
     }
 
-    existUsername = await User.findByUsername(username);
+    const found = await User.findByUsername(username);
 
-    if (existUsername) {
+    if (found) {
       let error = new Error("Username is already been used.");
       error.status = 409;
       throw error;

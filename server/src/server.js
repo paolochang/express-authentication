@@ -4,7 +4,7 @@ import "./models/User";
 import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import authRouter from "./api";
+import apiRoutes from "./router";
 
 const PORT = process.env.PORT || 5000;
 
@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(logger);
 
-app.use("/api/auth", authRouter);
+app.use("/", apiRoutes);
 
 app.listen(PORT, () =>
   console.log(`✅ Server is listening on http://localhost:${PORT} 🚀`)
